@@ -84,7 +84,7 @@ function CardButton({ selected, disabled, onClick, icon, label }) {
   );
 }
 
-export default function MealForm({ onGenerate, loading }) {
+export default function MealForm({ onGenerate, loading, remaining, isLimitReached }) {
   const [ingredients, setIngredients] = useState("");
   const [days, setDays] = useState(3);
   const [people, setPeople] = useState(2);
@@ -129,6 +129,17 @@ export default function MealForm({ onGenerate, loading }) {
               条件を入力してAIが最適な献立を生成します
             </span>
           </span>
+          <div style={{ marginLeft: "auto" }}>
+            {isLimitReached ? (
+              <span style={{ fontSize: "0.75rem", background: "#fee2e2", color: "#dc2626", padding: "4px 10px", borderRadius: "999px", fontWeight: 600 }}>
+                今月の上限に達しました
+              </span>
+            ) : (
+              <span style={{ fontSize: "0.75rem", background: "rgba(74,222,128,0.2)", color: "#86efac", padding: "4px 10px", borderRadius: "999px", fontWeight: 600 }}>
+                残り {remaining} 回
+              </span>
+            )}
+          </div>
         </h2>
       </div>
 
@@ -295,9 +306,9 @@ export default function MealForm({ onGenerate, loading }) {
         {/* 生成ボタン */}
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || isLimitReached}
           style={
-            loading
+            loading || isLimitReached
               ? {
                   background: "#e2e8f0",
                   color: "#94a3b8",

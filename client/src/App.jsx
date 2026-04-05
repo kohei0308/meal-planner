@@ -2,14 +2,20 @@ import { useState } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import MealForm from "./components/MealForm";
 import MealPlan from "./components/MealPlan";
+import { useUsageLimit } from "./hooks/useUsageLimit";
 
 export default function App() {
   const [plan, setPlan] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [lastConditions, setLastConditions] = useState(null);
+  const { remaining, isLimitReached, incrementUsage } = useUsageLimit();
 
   const generatePlan = async (conditions) => {
+    if (isLimitReached) {
+      setError("今月の無料生成回数（3回）を使い切りました。来月またご利用ください。");
+      return;
+    }
     setLoading(true);
     setError(null);
     setPlan(null);
@@ -29,6 +35,7 @@ export default function App() {
       }
 
       setPlan(data);
+      incrementUsage();
     } catch (err) {
       setError(
         err.message ||
@@ -155,7 +162,7 @@ export default function App() {
 
       {/* メインコンテンツ */}
       <main className="max-w-5xl mx-auto px-4 py-10">
-        <MealForm onGenerate={generatePlan} loading={loading} />
+        <MealForm onGenerate={generatePlan} loading={loading} remaining={remaining} isLimitReached={isLimitReached} />
 
         {loading && <LoadingSpinner />}
 
