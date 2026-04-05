@@ -126,7 +126,7 @@ export default function MealForm({ onGenerate, loading, remaining, isLimitReache
           <span>
             献立の条件を設定する
             <span className="block text-xs font-normal mt-0.5" style={{ color: "#86efac" }}>
-              条件を入力してAIが最適な献立を生成します
+              食材・日数・人数を入れるだけ
             </span>
           </span>
           <div style={{ marginLeft: "auto" }}>

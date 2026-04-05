@@ -517,7 +517,7 @@ export default function MealPlan({ plan, onRegenerate }) {
       >
         <p className="text-sm flex items-start gap-2" style={{ color: "#14532d" }}>
           <span style={{ flexShrink: 0 }}>ℹ️</span>
-          このプランはAIが生成した提案です。アレルギーや食事制限については必ずご自身でご確認ください。
+          アレルギーや食事制限がある場合はご注意ください。
         </p>
       </div>
     </div>
